@@ -1,0 +1,327 @@
+---
+title: "Exercício 11"
+author: "Neiton Carvalho da Silva"
+date: "11/07/2020"
+output: html_document
+---
+
+
+## Exercício 11 - Gráfico {.tabset}
+UFRPE - Universidade Federal Rural de Pernambuco<br>
+Disciplina: Computação para Análise de Dados<br>
+Profº Ermeson Andrade<br>
+
+### Questão 01 
+Questão 1) (20 pontos) Use os dados abaixo para gerar os gráfico.  Para o segundo gráfico (barras), use a escala logarítmica e as seguintes cores: "#E6E6E6", "#666666". Além disso, os gráficos podem ser organizados com a função layout().
+<br>Dados<br>
+```{r dados, echo=TRUE, warning=FALSE, message=FALSE,, include=TRUE}
+
+MRT_1F <-c(517.1468515630205, 85.13094142168089, 30.333207896694553, 12.694776264558937, 3.3041601673945418, 1.1823111717498882, 1.1892293502386786)
+MRT_3F <-c(156.68929936163462, 11.540837783562276, 0.4512835621696538, 0.4509797929766453, 0.4502068233039181, 0.4496185276300172, 0.4543157082191288)
+MRT_5F <-c(83.90319666471157, 0.3068151086494968, 0.30522314133037304, 0.3072588968084928, 0.30655265997285697, 0.3055812715727718, 0.3053297166713006)
+MRT_10F <-c(29.55430642951759, 0.19832832665772515, 0.1971923924717474, 0.19796648905716516, 0.19615594370806338, 0.2034569237883263, 0.19617420889447737)
+MRT_15F <-c(11.317736530583566, 0.167364215666193, 0.16172168266811013, 0.16701085329580515, 0.1598052657153692, 0.1645934043532696, 0.16216563797118075)
+MRT_sem_F <-c(11.93430909937736, 0.6095414637034009, 0.6060645101029295, 0.612167181646899, 0.6146761002685637, 0.6096747087200697, 0.6125810476877268)
+clock <- c(0.1, 0.5, 1, 1.5, 2, 2.5, 3)
+
+```
+<br>Gráfico de Linha<br>
+```{r grafico_linha, echo=TRUE, warning=FALSE, message=FALSE,, include=TRUE}
+
+#Gráfico de linha
+plot(clock, MRT_1F, type="o", pch=4,
+     cex=0.5, col="black",
+     xlab="Time between Things requests (seconds)",
+     ylab="Response Time (sec)",
+#     main="Título do Gráfico",
+     cex.lab=1, cex.axis=1,
+#     cex.main=3, # Tamanho do Objeto
+     xlim=c(0,3),
+     ylim=c(0,500))
+lines(MRT_3F, type = "o", cex = 0.6 , col = "yellow", pch=11)
+lines(MRT_5F, type = "o", cex = 0.6 , col = "red", pch=1)
+lines(MRT_10F, type = "o", cex = 0.6 , col = "blue", pch=2)
+lines(MRT_15F, type = "o", cex = 0.6 , col = "purple", pch=5)
+lines(MRT_sem_F, type = "o", cex = 0.6 , col = "green", pch=4)
+legend("topright", pch = c(4,11,1,2,5,4),
+       col =c("black","yellow","red","blue","purple","green"),
+       legend = c("1 Fog", "3 Fog", "5 Fog", "10 Fog", "15 Fog", "W/O Fog"),
+       cex = 0.7)
+
+```
+<br>gráfico (barras)<br>
+```{r grafico_barras, echo=TRUE, warning=FALSE, message=FALSE,, include=TRUE}
+##Gráfico de Barras
+
+par(mfrow=c(1,2))
+#01
+
+barplot(matrix(c(MRT_sem_F, MRT_1F), 2,7, byrow = T), 
+        beside = T, col=c("#FFD700", "#ADFF2F"), 
+        ylab = "Response time (s)",
+        xlab = "Time between Things requests",
+        names.arg = c("0.1", "0.5","1","1.5","2","2.5","3"),
+        ylim = c(0,500))
+#axis(side = 2, at = c(seq(2,500,2)))
+legend("topright", pch = c(15,15,15), legend = c("w/o Fog", "1 Fog"), col = c("#FFD700", "#ADFF2F"))
+
+#02
+barplot(matrix(c(MRT_sem_F, MRT_3F), 2,7, byrow = T), 
+        beside = T, col=c("#FFD700", "#ADFF2F"), 
+        ylab = "Response time (s)",
+        xlab = "Time between Things requests",
+        names.arg = c("0.1", "0.5","1","1.5","2","2.5","3"),
+        ylim = c(0.8,50))
+legend("topright", pch = c(15,15,15), legend = c("w/o Fog", "3 Fog"), col = c("#FFD700", "#ADFF2F"))
+
+#03
+barplot(matrix(c(MRT_sem_F, MRT_5F), 2,7, byrow = T), 
+        beside = T, col=c("#FFD700", "#ADFF2F"), 
+        ylab = "Response time (s)",
+        xlab = "Time between Things requests",
+        names.arg = c("0.1", "0.5","1","1.5","2","2.5","3"),
+        ylim = c(0.8,50))
+legend("topright", pch = c(15,15,15), legend = c("w/o Fog", "5 Fog"), col = c("#FFD700", "#ADFF2F"))
+
+#04
+barplot(matrix(c(MRT_sem_F, MRT_10F), 2,7, byrow = T), 
+        beside = T, col=c("#FFD700", "#ADFF2F"), 
+        ylab = "Response time (s)",
+        xlab = "Time between Things requests",
+        names.arg = c("0.1", "0.5","1","1.5","2","2.5","3"),
+        ylim = c(0.8,50))
+legend("topright", pch = c(15,15,15), legend = c("w/o Fog", "10 Fog"), col = c("#FFD700", "#ADFF2F"))
+
+#05
+barplot(matrix(c(MRT_sem_F, MRT_15F), 2,7, byrow = T), 
+        beside = T, col=c("#FFD700", "#ADFF2F"), 
+        ylab = "Response time (s)",
+        xlab = "Time between Things requests",
+        names.arg = c("0.1", "0.5","1","1.5","2","2.5","3"),
+        ylim = c(0.8,50))
+legend("topright", pch = c(15,15,15), legend = c("w/o Fog", "15 Fog"), col = c("#FFD700", "#ADFF2F"))
+
+
+
+
+```
+
+### Questão 02
+Questão 2) (10 pontos) Para a tabela abaixo que classifica a qualidade de refeição de acordo com categorias de preços crie um gráfico de barras empilhadas.
+<br>
+
+![tabela](C:\mestrado_UFRPE_Informatica_Aplicada_Neiton\Computacao_para_Analise_de_Dados\Atividades\Exercício 11\tabela_questao_2.png)
+```{r teste2, echo=TRUE, message=FALSE, warning=FALSE, include=TRUE}
+
+# 2 questão :
+good<-c("53.8", "33.9", "2.6","0.0")
+very<-c("43.6", "54.2", "60.5", "21.4")
+excellent<-c("2.6", "11.9", "36.8", "78.6")
+
+barplot(matrix(c(good,very,excellent),3,4, byrow = T), col=c("yellow", "red", "blue"),
+        names.arg = c("$10-19", "$20-29", "$30-39", "$40-49"),
+        ylab = "Quality Rating",
+        xlab = "Meal Price")
+legend("topright", pch = c(15,15,15), legend = c("Good", "Very Good", "Excellent"), 
+       col = c("yellow", "red", "blue"), cex = 0.8)
+
+
+```
+
+
+### Questão 03
+Questão 03) (10 pontos) Faça o histograma das temperaturas do mês de maio do dataset airquality. No entanto, primeiro converta as temperaturas para graus Celsius através da expressão °C = (°F − 32) / 1.8. Após isso, gere o histograma.  Também  adicione  título, nomes de eixos, cor e curva de densidade.
+<br>
+Formula da conversão em Latex:
+<br>
+$^{\circ}C=\frac{^{\circ}F - 32}{1,8}$
+<br>
+
+```{r teste3, echo=TRUE, message=FALSE, warning=FALSE, include=TRUE}
+
+# 3 questão:
+library(dplyr)
+b <- airquality %>%
+        filter(Month == 5) %>%
+        select(Temp) %>%
+        mutate(celsius = (Temp-32)/1.8)
+        
+#b<-airquality$Temp[airquality$Month == 5]
+#b<-(b-32)/1.8
+hist(b$celsius, probability = T, 
+     col = c("#FAEBD7","#00FFFF","#A52A2A","#7FFF00","#9932CC", "#8B0000", "#FFD700","green"),
+     xlab = "Temperatura",
+     ylab = "Frequência",
+     main = "Histograma da Temperatura em ºC")
+db <- density(b$celsius) 
+lines(db)
+```
+
+
+### Questão 04
+<br>
+Questão 04) (10 pontos) Crie um gráfico de pizza com a porcentagem da tabela total de vendas por país. Use o dataset abaixo. Inclua a porcentagem de cada fatia, as cores das fatias e o nome do gráfico. Adicionalmente, use o comando legend() para incluir a legenda do gráfico.
+<br>
+a) sales <- read.table("https://training-course-material.com/images/8/8f/Sales.txt",header=TRUE)
+<br>
+
+```{r grafico_pizza, echo=TRUE, message=FALSE, warning=FALSE, include=TRUE}
+sales <- read.table("https://training-course-material.com/images/8/8f/Sales.txt",header=TRUE)
+pct <- round(sales$SALES/sum(sales$SALES)*100)
+lbls <- paste(sales$COUNTRY, pct)
+lbls <- paste(lbls,"%",sep="")
+pie(sales$SALES,lbls,
+    main = "Gráfico de Pizza",
+    col = rainbow(6))
+legend("topright", pch = c(15,15,15), legend = sales$COUNTRY, 
+       col = rainbow(6), cex = 0.8)
+
+```
+
+
+### Questão 05
+<br>
+Questão 05) (10 pontos) Utilize os dados de contagens de insetos em unidades experimentais agrícolas tratados com inseticidas diferentes disponível no R em InsectSprays e construa um boxplot  sem a presença dos outliers para os 6 tipos de inseticidas. Coloque título e nomes de eixos adequados. Além disso, as caixas devem ser preenchidas com a cor “yellow”.
+<br>
+```{r Grafico_boxplot, echo=TRUE, message=FALSE, warning=FALSE, include=TRUE}
+
+boxplot(count ~ spray , data=InsectSprays,
+        xlab = "Spray",
+        ylab = "Count", 
+        main = "InsectSprays", 
+        col = c("yellow"),
+        outline=FALSE)
+
+```
+
+
+
+### Questão 06
+<br>
+Questão 06) (10 pontos) Utilizando o dataset mtcars, faça um gráfico de dispersão do peso do carro (wt)  em relação as milhas percorridas (mpg). Coloque título, legenda e nomes nos eixos. Também adicione a linha de tendência utilizando a função abline().
+<br>
+
+```{r grafico_dispersao_questao_6, echo=TRUE, message=FALSE, warning=FALSE, include=TRUE}
+
+plot(mtcars$wt, mtcars$mpg,
+     main = "DISPERSÃO MTCARS",
+     xlab = "Weight",
+     ylab = "Miles",
+     col = c("blue", "black"))
+legend("topright", pch = c(15,15,15), 
+       legend = mtcars$wt, 
+       col = unique(mtcars$gear), 
+       cex = 0.6)
+abline(
+  lm(mtcars$mpg~mtcars$wt), 
+  col=unique(mtcars$gear))
+
+```
+
+
+
+### Questão 07
+<br>
+Questão 07) (3.0 pontos) Gere os gráficos abaixo a partir dos seguintes dados: monitoringCloudData_0.1.csv, monitoringCloudData_0.5.csv, monitoringCloudData_1.csv e monitoringCloudData_NONE.csv. Esse dados consistem de informações de monitoramento dos recursos de uma máquina virtual. Basicamente, é necessário gerar gráficos de linha do tempo de coleta dos recursos (currentTime) em relação a memória usada (usedMemory). Porém, é necessário ajustar a coluna “currentTime” para que o tempo fique contínuo e a coluna “usedMemory” para que todas as informações fiquem megabytes.Por fim, use a função layout() para organizar os gráficos.
+<br>
+![Figura_7](C:\mestrado_UFRPE_Informatica_Aplicada_Neiton\Computacao_para_Analise_de_Dados\Atividades\Exercício 11\figura_questao_7.png)
+<br>
+
+```{r questao_7, echo=TRUE, message=FALSE, warning=FALSE, include=TRUE}
+setwd("C:/mestrado_UFRPE_Informatica_Aplicada_Neiton/Computacao_para_Analise_de_Dados/Atividades/Exercício 11")
+getwd()
+
+library(readr)
+library(dplyr)
+library(tidyr)
+library(stringr)
+library(tidyverse)
+library(ggplot2)
+library(lattice)
+
+par(mfrow=c(1,2))
+################################################################################
+gera_grafico <- function(df,x){
+  
+  df <- df%>%
+    separate(
+      col="currentTime",
+      into = c("data","tempo"),
+      sep = 11
+    )
+  
+  df <- df%>%
+    separate(
+      col="tempo",
+      into = c("hora","milessegundo"),
+      sep = 2
+    )
+
+  #transformando tudo em MB
+  
+  df <- df%>%
+    separate(
+      col="usedMemory",
+      into = c("uso","byte"),
+      sep = -2
+    )
+  
+  df$uso <- as.double(df$uso)
+  df$hora <- as.integer(df$hora)
+
+  
+  for (i in 1:nrow(df)){
+    if (df[i,8] == "GB") {
+      df[i,7] <- df[i,7] * 1024
+    }else{
+      df[i,7] <- df[i,7]
+    }
+  }  
+  
+  #limpando tudo
+  df <- df%>%select("hora","uso")
+  
+  #Escolhendo o título do gráfico
+  if(x == 1 ){
+    aux <- "Memory Analysis (None Workload)"
+  }else if(x == 2){
+    aux <- "Memory Analysis (Workload of 0.1)"
+  }else if(x == 3){
+    aux <- "Memory Analysis (Workload of 0.5)"
+  }else{
+    aux <- "Memory Analysis (Workload of 1.0)"
+  }
+  
+  
+  #Agora gerar o gráfico
+  plot( sort(df$hora, decreasing = FALSE),df$uso,
+        type = "l", 
+        xlab = "Time (hour)",
+        ylab = "Used Memory(MB)",
+        main = aux,
+        ylim = c(min(df$uso),max(df$uso)),
+        xlim = c(min(df$hora),max(df$hora))
+  )
+  
+}
+
+################################################################################
+
+#Primeiro Gráfico --> monitoringCloudData_NONE.csv
+df_none <- read.csv("monitoringCloudData_NONE.csv")
+gera_grafico(df_none,1)
+
+#Segundo Gráfico --> monitoringCloudData_1.csv
+df_1 <- read.csv("monitoringCloudData_1.csv")
+gera_grafico(df_1,2)
+
+#Terceiro Gráfico --> monitoringCloudData_0.5.csv
+df_05 <- read.csv("monitoringCloudData_0.5.csv")
+gera_grafico(df_05,3)
+
+#Quarto Gráfico --> monitoringCloudData_0.1.csv
+df_01 <- read.csv("monitoringCloudData_0.1.csv")
+gera_grafico(df_01,4)
+```
+
+
